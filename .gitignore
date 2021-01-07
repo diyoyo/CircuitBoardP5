@@ -1,1 +1,3 @@
-#/libs/
+/libs/Processing/*
+/libs/batikfont.jar
+/libs/geomerative.jar

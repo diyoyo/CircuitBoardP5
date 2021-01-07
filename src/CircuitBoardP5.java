@@ -12,13 +12,15 @@ import java.util.stream.IntStream;
 /**
  * Created by Yoyo on 03/05/2017.
  */
-public class CircuitBoard3 extends PApplet {
+public class CircuitBoardP5 extends PApplet {
 
 
     public static void main(String[] args) {
         PApplet.main("CircuitBoard3");
     }
 
+
+    public static final boolean DEBUG = true;
 
     private boolean started = false;
     private int num_nodes = 200;
@@ -37,14 +39,14 @@ public class CircuitBoard3 extends PApplet {
     private boolean switchBool = false;
 
     private int[][] grid;
-    private PVector[] dirs = new PVector[]{
+    private final PVector[] dirs = new PVector[]{
             new PVector(0, 1),
             new PVector(1, 0),
             new PVector(-1, 0),
             new PVector(0, -1)
     };
 
-    private PVector[] pivot_dirs = new PVector[]{
+    private final PVector[] pivot_dirs = new PVector[]{
             new PVector(1, 1),
             new PVector(1, -1),
             new PVector(-1, 1),
@@ -55,6 +57,8 @@ public class CircuitBoard3 extends PApplet {
     RShape svg;
     RShape svg2;
     String filename = "";
+    String filepath = "/Users/Yoyo/Downloads/standing-human-body-silhouette-svgrepo-com.svg";
+    String destFolder = "/Volumes/Yoyo/Dev/";
 
     public void settings() {
         size(1080, 1080);
@@ -72,15 +76,9 @@ public class CircuitBoard3 extends PApplet {
         rectMode(CENTER);
 
         RG.init(this);
-        //svg=RG.loadShape("/Volumes/Yoyo/Dev/Design/skin.svg");
-        svg = RG.loadShape("/Volumes/Yoyo/Dev/Design/brain-black-silhouette.svg");
-        //  svg = RG.loadShape("/Volumes/Yoyo/Dev/Design/heart.svg");
-        // svg = RG.loadShape("/Volumes/Yoyo/heart.svg");
-
-        String filepath = "/Users/Yoyo/Downloads/standing-human-body-silhouette-svgrepo-com.svg";
         filename = filepath.substring(filepath.lastIndexOf("/") + 1);
         svg = RG.loadShape(filepath);
-        //svg.centerIn(g, width/2);
+        //svg.centerIn(g,width/2f);
         svg2 = new RShape();
 
 
@@ -353,7 +351,7 @@ public class CircuitBoard3 extends PApplet {
                 }
             }
 
-            RG.saveShape("/Volumes/Yoyo/Dev/" + year() + "-" + month() + "-" + day() + "." + hour() + minute() + "." + second() + "_" + filename, svg2);
+            RG.saveShape(destFolder + nf(year(), 4) + "-" + nf(month(), 2) + "-" + nf(day(), 2) + "." + nf(hour(), 2) + nf(minute(), 2) + "." + nf(second(), 2) + "_" + filename, svg2);
 
             // endRecord();
             exit();
@@ -553,6 +551,12 @@ public class CircuitBoard3 extends PApplet {
 
                 grid[i][j] = 0;
             }
+        }
+    }
+
+    public static void println(String message) {
+        if (DEBUG) {
+            PApplet.println(message);
         }
     }
 

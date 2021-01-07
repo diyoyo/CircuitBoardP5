@@ -10,13 +10,13 @@ import java.util.stream.IntStream;
 
 
 /**
- * Created by Yoyo on 03/05/2017.
+ * Created by Yohan Farouz on 03/05/2017.
  */
 public class CircuitBoardP5 extends PApplet {
 
 
     public static void main(String[] args) {
-        PApplet.main("CircuitBoard3");
+        PApplet.main("CircuitBoardP5");
     }
 
 
@@ -57,8 +57,8 @@ public class CircuitBoardP5 extends PApplet {
     RShape svg;
     RShape svg2;
     String filename = "";
-    String filepath = "/Users/Yoyo/Downloads/standing-human-body-silhouette-svgrepo-com.svg";
-    String destFolder = "/Volumes/Yoyo/Dev/";
+    String filepath = sketchPath() + "/input/human_body.svg";
+    String destFolder = sketchPath() + "/output/";
 
     public void settings() {
         size(1080, 1080);
@@ -322,8 +322,9 @@ public class CircuitBoardP5 extends PApplet {
             for (int i = 0; i < nodes.size(); i++) {
                 svg2.setStroke(1);
 
-                svg2.addChild(RShape.createLine(nodes.get(i).x, nodes.get(i).y, node_lines.get(i).get(0).x, node_lines.get(i).get(0).y));
+                RShape child = RShape.createLine(nodes.get(i).x, nodes.get(i).y, node_lines.get(i).get(0).x, node_lines.get(i).get(0).y);
                 line(nodes.get(i).x, nodes.get(i).y, node_lines.get(i).get(0).x, node_lines.get(i).get(0).y);
+                child.setFill(false);
                 for (int j = 0; j < node_lines.get(i).size() - 1; j++) {
                     pushStyle();
 
@@ -333,14 +334,22 @@ public class CircuitBoardP5 extends PApplet {
                             node_lines.get(i).get(j + 1).x,
                             node_lines.get(i).get(j + 1).y);
 
-                    svg2.addChild(RShape.createLine(node_lines.get(i).get(j).x,
-                            node_lines.get(i).get(j).y,
+//                    svg2.addChild(RShape.createLine(node_lines.get(i).get(j).x,
+//                            node_lines.get(i).get(j).y,
+//                            node_lines.get(i).get(j + 1).x,
+//                            node_lines.get(i).get(j + 1).y));
+
+                    child.addLineTo(
                             node_lines.get(i).get(j + 1).x,
-                            node_lines.get(i).get(j + 1).y));
+                            node_lines.get(i).get(j + 1).y);
+
 
                     popStyle();
 
                 }
+
+                //child.addClose();
+                svg2.addChild(child);
 
                 ellipse(nodes.get(i).x, nodes.get(i).y, nodeDiams.get(i), nodeDiams.get(i));
                 svg2.addChild(RShape.createEllipse(nodes.get(i).x, nodes.get(i).y, nodeDiams.get(i), nodeDiams.get(i)));
